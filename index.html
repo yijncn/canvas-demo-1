@@ -8,9 +8,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="canvas"></div>
+    <canvas id="canvas" width="100" height="100"></canvas>
     <script>
-        canvas.onclick = (e) => {
+        let canvas = document.getElementById("canvas");
+        canvas.width = document.documentElement.clientWidth //canvas的宽变为屏幕宽
+        canvas.height = document.documentElement.clientHeight //canvas的高变为屏幕高
+        //画线
+        let ctx = canvas.getContext("2d");
+        let painting = false
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = 'none'
+        canvas.onmousedown = () => {
+            painting = true
+        }
+        canvas.onmousemove = (e) => {
+            if(painting === true) {
+                //ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10); 方形
+                ctx.beginPath();//圆形
+                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.fill();
+            } else {
+                console.log('nothing')
+            }
+        }
+        canvas.onmouseup = () => {
+            painting = false
+        }
+    </script>
+    <!-- <div id="canvas"></div> div很慢
+    <script>
+        //canvas.onclick = (e) => { 点
+        canvas.onmousemove = (e) => { 线
             console.log(e.clientX)
             console.log(e.clientY)
             //console.log调试大法
@@ -27,6 +56,6 @@
             div.style.backgroundColor = 'black'
             canvas.appendChild(div)
         }
-    </script>
+    </script> -->
 </body>
 </html>
